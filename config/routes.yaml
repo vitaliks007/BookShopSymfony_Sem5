@@ -1,3 +1,15 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+index:
+    path: /
+    controller: App\Controller\IndexController::index
+book:
+    path: /book
+    controller: App\Controller\BookController::index
+auth:
+    path: /auth
+    controller: App\Controller\AuthController::index
+cart:
+    path: /cart
+    controller: App\Controller\CartController::index

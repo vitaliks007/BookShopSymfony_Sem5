@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Книга{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/book.css') }}"/>
+{% endblock %}
+
+{% block body %}
+    <section>
+        <div id="book-store">
+            <img src="{{ asset('resources/' ~ book.getIcon()) }}" alt="Картинка">
+            <div>
+                <h1>{{ book.getName() }}</h1>
+                <h2>{{ book.getAuthor().getName() }}</h2>
+                <p id="book-desc">{{ book.getDescription() }}</p>
+                <p id="book-cost">{{'Цена: ' ~ book.cost ~ ' Руб' }}</p>
+
+                {% if user %}
+                    <form method="post" action="{{ path('app_book_cart', {'book_id': book.getId()}) }}">
+                        <input type="submit" id="add-cart" value="Добавить в корзину">
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

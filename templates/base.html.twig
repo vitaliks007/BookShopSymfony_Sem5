@@ -7,6 +7,9 @@
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}"/>
+
+{#            <link rel="stylesheet" type="text/css" href="{{ asset('css/cart.css') }}"/>#}
         {% endblock %}
 
         {% block javascripts %}
@@ -14,6 +17,54 @@
         {% endblock %}
     </head>
     <body>
+        <header>
+            <img src="" width="3%" alt="">
+            <div>
+                <ul>
+                    <li>
+                        <a href="/">
+                            <p class="selected">Главная</p>
+                            <p class="hidden">Главная</p>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/catalog">
+                            <p>Каталог</p>
+                            <p class="hidden">Каталог</p>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/cart">
+                            <p>Корзина</p>
+                            <p class="hidden">Корзина</p>
+                        </a>
+                    </li>
+
+                    {% if user %}
+                    <li>
+                        <a href="/auth/logout">
+                            <p>Выйти</p>
+                            <p class="hidden">Выйти</p>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% if not user %}
+                    <li>
+                        <a href="/auth/login">
+                            <p>Авторизация</p>
+                            <p class="hidden">Авторизация</p>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </header>
         {% block body %}{% endblock %}
+        <footer>
+            <p>2022c student Mirea ALL RIGHTS RESERVED</p>
+        </footer>
     </body>
 </html>

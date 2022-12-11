@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Каталог{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/catalog.css') }}"/>
+{% endblock %}
+{% block body %}
+    <section>
+        <div id="search-form">
+            <form method="get" action="@{/public/catalog/getBooks}">
+                <input type="text" id="search" placeholder="Название книги" name="bookName">
+                <input type="submit" value="Поиск" id="search-btn">
+            </form>
+        </div>
+
+        <div class="option-list">
+            <div class="select-list">
+                <div class="select-card">
+                    <select name="genre" id="">
+                        <option value="default" disabled="true" selected="true">Жанры</option>
+                        <option th:each="genre : ${genres}" th:value="${genre.genreName}">
+                            <a th:href="@{/public/}"> <!--TODO-->
+                                <p th:text="${genre.genreNameRus}"></p>
+                            </a>
+                        </option>
+                    </select>
+                </div>
+                <div class="select-card">
+                    <a th:href="@{/public/}">Новинки</a>
+                </div>
+                <div class="select-card">
+                    <a th:href="@{/public/}">Скидки</a>
+                </div>
+            </div>
+            <div class="sort-card">
+                <p>Сортировать по:</p>
+                <select name="sort" id="">
+                    <option value="cost-up">Цена вверх</option>
+                    <option value="cost-down">Цена вниз</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div id="book-list">
+            {% for book in books %}
+            <div class="book-card">
+                <img src="{{ asset('resources/' ~ book.getIcon()) }}" alt="Картинка">
+                <h1>{{ book.getName() }}</h1>
+                <h2>{{ book.getAuthor().getName() }}</h2>
+                <p>{{ book.getDescription() }}</p>
+                <a href="{{ path('book', {'book_id': book.getId()}) }}">
+                    <button>{{ book.cost ~ ' Руб' }}</button>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Корзина{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cart.css') }}"/>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="order-list">
+            <p></p>
+            {% for bookOrderProduct in bookOrderProducts %}
+                <div class="order-card">
+                    <img src="{{ asset('resources/' ~ bookOrderProduct.getBook().getIcon()) }}" alt="" class="book-icon">
+                    <p class="author-name">{{bookOrderProduct.getBook().author.name}}</p>
+                    <p class="book-name">{{bookOrderProduct.getBook().name}}</p>
+
+                    {% if bookOrderProduct.getCount() <= bookOrderProduct.getBook().count %}
+                        <p class="cost">{{bookOrderProduct.getCount() ~ 'шт. ' ~
+                            (bookOrderProduct.getCost() * bookOrderProduct.getCount()) ~ ' Руб'}}</p>
+                    {% else %}
+                        <p class="cost">Нет на складе!</p>
+                    {% endif %}
+
+                    <form action="{{ path('app_cart_delete', {'bookOrderProductId': bookOrderProduct.getId()}) }}" method="post">
+                        <input type="submit" value="-">
+                    </form>
+                </div>
+            {% endfor %}
+
+            {% if bookOrderProductsCount > 0 %}
+                <form action="{{ path('app_cart_sell', {'bookOrderId': bookOrderProducts[0].getBookOrder().getId()}) }}" method="post">
+                    <p>{{ bookOrderProductsSum }}</p>
+                    <input class="sell" type="submit" value="Заказать">
+                </form>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

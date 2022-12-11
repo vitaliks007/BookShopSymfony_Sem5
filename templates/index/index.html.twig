@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/index.css') }}"/>
+{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>Добро пожаловать!</h1>
+        <p>На данном сайте Вы можете приобрести книги.</p>
+    </section>
+{% endblock %}
